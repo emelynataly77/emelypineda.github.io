@@ -1,0 +1,1342 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Bellabeat Capstone Project - Emely Pineda</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <!-- Prism CSS + JS for code highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-r.min.js"></script>
+
+    <style>
+      /* Paragraph styling */
+      .proback-text {
+        color: #222;
+        font-size: 1.2rem;
+        line-height: 1.8;
+        text-align: left;
+        margin-top: 20px;
+      }
+
+      /* Outro styling */
+      .proback-outro {
+        margin-top: 30px;
+        text-align: left;
+      }
+      .proback-outro a {
+        color: #e67e22;
+        text-decoration: none;
+        font-weight: 600;
+      }
+      .proback-outro a:hover {
+        text-decoration: underline;
+      }
+
+      /* Project info section */
+      .project-info {
+        margin-bottom: 20px;
+        font-size: 1.1rem;
+        line-height: 1.7;
+        color: #222;
+      }
+      .project-info p {
+        margin: 0 0 8px 0;
+      }
+
+      /* Subsection headers */
+      .subsection-header {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-top: 25px;
+        margin-bottom: 10px;
+        color: #e67e22;
+      }
+
+      /* Sidebar navigation */
+      .sidebar-nav {
+        position: fixed;
+        top: 120px;
+        right: 20px;
+        width: 175px;
+        background: #f9f9f9;
+        border-left: 3px solid #e67e22;
+        padding: 20px;
+        font-size: 1rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      }
+      .sidebar-nav h3 {
+        margin-top: 0;
+        font-size: 1.1rem;
+        color: #e67e22;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 5px;
+      }
+      .sidebar-nav ul {
+        list-style: none;
+        padding-left: 0;
+        margin: 0;
+      }
+      .sidebar-nav ul li {
+        margin-bottom: 10px;
+      }
+      .sidebar-nav ul li a {
+        color: #222;
+        text-decoration: none;
+        display: block;
+        padding: 3px 0;
+        border-radius: 4px;
+      }
+      .sidebar-nav ul li a:hover,
+      .sidebar-nav ul li a.active {
+        color: #fff;
+        background: #e67e22;
+        font-weight: 600;
+        padding-left: 5px;
+      }
+
+      /* Ensure anchors scroll with space for header */
+      section.anchor-section {
+        scroll-margin-top: 120px; /* matches header height */
+      }
+
+      /* Bullet points formatting */
+      ul.custom-bullets {
+        list-style-type: disc;
+        margin-left: 20px;
+      }
+      ul.custom-bullets li {
+        margin-bottom: 8px;
+      }
+
+      /* Data grid: 3 columns of 6 items each */
+      .data-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px 30px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+      }
+      .data-grid ul {
+        list-style-type: disc;
+        color: gray;
+        margin: 0;
+        padding-left: 20px;
+      }
+
+      @media screen and (max-width: 980px) {
+        .sidebar-nav {
+          display: none;
+        }
+        .data-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Collapsible code block style (orange header, white expanded code) */
+      .code-collapse {
+        margin-top: 12px;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      }
+      .code-collapse > summary {
+        cursor: pointer;
+        padding: 12px 16px;
+        font-weight: 600;
+        background: #e67e22;
+        color: #fff;
+        position: relative;
+        user-select: none;
+        list-style: none;
+      }
+      .code-collapse > summary::marker { content: ''; }
+      .code-collapse > summary::after {
+        content: '▼';
+        position: absolute;
+        right: 16px;
+        transition: transform 0.3s ease;
+      }
+      .code-collapse[open] > summary::after {
+        transform: rotate(-180deg);
+      }
+      .code-collapse pre {
+        margin: 0;
+        padding: 16px;
+        overflow: auto;
+        background: #fff;
+        border-radius: 0 0 8px 8px;
+        box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+      }
+    </style>
+
+    <script>
+      // Highlight active navigation link on scroll
+      window.addEventListener('scroll', function(){
+        const sections = document.querySelectorAll('section.anchor-section');
+        const scrollPos = window.scrollY || document.documentElement.scrollTop;
+        const links = document.querySelectorAll('.sidebar-nav ul li a');
+        sections.forEach(section => {
+          const offsetTop = section.offsetTop - 130;
+          const offsetBottom = offsetTop + section.offsetHeight;
+          const id = section.getAttribute('id');
+          if(scrollPos >= offsetTop && scrollPos < offsetBottom) {
+            links.forEach(link => link.classList.remove('active'));
+            const activeLink = document.querySelector('.sidebar-nav ul li a[href="#' + id + '"]');
+            if(activeLink) activeLink.classList.add('active');
+          }
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="page-wrapper">
+      <!-- Header -->
+      <header id="header">
+        <h1><a href="index.html">Emely Pineda Portfolio</a></h1>
+        <nav id="nav">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li>
+              <ul>
+                <li><a href="proback.html">Professional Background</a></li>
+                <li><a href="personal.html">Personal Life</a></li>
+              </ul>
+            </li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      <!-- Sidebar Navigation -->
+      <aside class="sidebar-nav">
+        <h3>Navigation</h3>
+        <ul>
+          <li><a href="#overview">Project Overview</a></li>
+          <li><a href="#excel">Excel Cleaning</a></li>
+          <li><a href="#sql">SQL Queries</a></li>
+          <li><a href="#rstudio">RStudio Analysis</a></li>
+          <li><a href="#insights">Key Insights</a></li>
+          <li><a href="#acknowledgements">Acknowledgements</a></li>
+        </ul>
+      </aside>
+
+      <!-- Main Content -->
+      <section id="main" class="container">
+        <!-- Page Header -->
+        <header>
+          <h2>Bellabeat Capstone Project</h2>
+          <p>Google Data Analytics Certificate Case Study</p>
+        </header>
+<div class="banner-image" style="width: 100%; max-width: 100%; margin: 20px 0; text-align: center;">
+  <img 
+    src="images/run.jpg" 
+    alt="Chess Stats Banner" 
+    style="width: 100%; max-height: 600px; object-fit: cover; border-radius: 8px; box-shadow: 0 6px 12px rgba(0,0,0,0.1);"
+  />
+</div>
+
+        <!-- Project Overview -->
+        <section id="overview" class="anchor-section">
+          <h2>Project Overview</h2>
+          <div class="box">
+            <div class="project-info">
+              <p><strong>Certificate:</strong> Google Data Analytics</p>
+              <p><strong>Tools Used:</strong> Excel, SQL, RStudio</p>
+              <p><strong>Skills Applied:</strong> Data manipulation, statistical analysis, data visualization, critical thinking</p>
+            </div>
+            <p class="proback-text">
+              This is the Google Data Analytics Capstone Project, focused on analyzing smart device fitness data to uncover insights for Bellabeat, a women’s wellness company. The goal was to explore how consumers use fitness devices and provide actionable recommendations for Bellabeat’s marketing strategy. I am very passionate about health and wellness and reaching one’s fitness goals, and I really enjoyed working on this project.
+            </p>
+<!-- Stakeholders -->
+<h3 style="color: orange; margin-top: 20px;">Stakeholders</h3>
+<ul class="custom-bullets">
+  <li><span class="proback-text"><strong>Urška Sršen:</strong> Bellabeat’s cofounder and Chief Creative Officer</span></li>
+  <li><span class="proback-text"><strong>Sando Mur:</strong> Bellabeat’s cofounder; key member of the Bellabeat executive team</span></li>
+</ul>
+
+<!-- Bellabeat Products -->
+<h3 style="color: orange; margin-top: 20px;">Bellabeat Products</h3>
+<ul class="custom-bullets">
+  <li><span class="proback-text"><strong>Bellabeat app:</strong> Provides users with health data related to activity, sleep, stress, menstrual cycle, and mindfulness habits; connects to Bellabeat smart products.</span></li>
+  <li><span class="proback-text"><strong>Leaf:</strong> A wellness tracker worn as bracelet, necklace, or clip; connects to the app to track activity, sleep, and stress.</span></li>
+  <li><span class="proback-text"><strong>Time:</strong> A wellness watch that combines a classic look with smart technology to track activity, sleep, and stress; connects to the app to provide daily wellness insights.</span></li>
+  <li><span class="proback-text"><strong>Spring:</strong> A water bottle that tracks daily water intake; connects to the app to monitor hydration levels.</span></li>
+  <li><span class="proback-text"><strong>Bellabeat membership:</strong> Subscription program giving users 24/7 personalized guidance on nutrition, activity, sleep, health, beauty, and mindfulness.</span></li>
+</ul>
+
+<!-- The Data -->
+<h3 style="color: orange; margin-top: 20px;">The Data</h3>
+<p class="proback-text">
+  The FitBit Fitness Tracker dataset, provided by Kaggle user Mobius, serves as the basis for this case study. It includes 18 CSV files for processing, cleaning, and analysis.
+</p>
+<div class="data-grid">
+
+  <ul>
+    <li>'dailyActivity_merged.csv'</li>
+    <li>'dailyCalories_merged.csv'</li>
+    <li>'dailyIntensities_merged.csv'</li>
+    <li>'dailySteps_merged.csv'</li>
+    <li>'heartrate_seconds_merged.csv'</li>
+    <li>'hourlyCalories_merged.csv'</li>
+  </ul>
+  <ul>
+    <li>'hourlyIntensities_merged.csv'</li>
+    <li>'hourlySteps_merged.csv'</li>
+    <li>'minuteCaloriesNarrow_merged.csv'</li>
+    <li>'minuteCaloriesWide_merged.csv'</li>
+    <li>'minuteIntensitiesNarrow_merged.csv'</li>
+    <li>'minuteIntensitiesWide_merged.csv'</li>
+  </ul>
+  <ul>
+    <li>'minuteMETsNarrow_merged.csv'</li>
+    <li>'minuteSleep_merged.csv'</li>
+    <li>'minuteStepsNarrow_merged.csv'</li>
+    <li>'minuteStepsWide_merged.csv'</li>
+    <li>'sleepDay_merged.csv'</li>
+    <li>'weightLogInfo_merged.csv'</li>
+  </ul>
+</div>
+<p class="proback-text">
+  After doing some research on the data, I found that it was collected in 2016 and includes data from 33 Bellabeat users who voluntarily agreed to share their information for analysis. Although historical health data can provide helpful insights, using data from 2016 might not be the best way to guide marketing strategies for today’s consumers. Additionally, all of the data has been anonymized, and it remains unclear how these users were selected. We don’t know if these users represent a randomly selected group or if they met some other criteria. The lack of available information, combined with the small sample size, makes it hard to determine how representative and reliable the data actually is. The data is also inconsistent — many datasets include fewer than 33 users, and entire days of data are absent. The data itself is sourced from a third party and made available on Kaggle by the user Mobius. Overall, the data quality could use some improvement. That said, I will continue with the analysis for the sake of this case study — onward!
+</p>
+
+          </div>
+        </section>
+
+        <!-- Excel Cleaning -->
+        <section id="excel" class="anchor-section">
+          <h2>Excel Cleaning</h2>
+          <div class="box">
+            <p class="proback-text">
+              I began with 18 raw .csv files from the FitBit Fitness Tracker dataset. I completed basic data cleaning including:
+            </p>
+            <ul class="proback-text" style="list-style-type: disc; margin-left: 20px; line-height: 1.8;">
+              <li>Removing nulls, blanks, and duplicate values</li>
+              <li>Converting datetime columns for compatibility into SQL/R</li>
+              <li>Using <code>=COUNTA(UNIQUE())</code> function to compare user ID counts across datasets</li>
+            </ul>
+            <p class="proback-text">
+              The table below represents a summary of the cleaning completed in Excel:
+            </p>
+<!-- Excel Cleaning Summary Table -->
+<div class="image-pair">
+  <div class="graph-card" style="width: 100%; max-width: none; margin: 0 auto;">
+    <img src="images/Screenshot (69).png" alt="Excel Cleaning Summary Table" class="graph-image" style="width: 100%; height: auto; border-radius: 6px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" />
+  </div>
+</div>
+
+<p class="proback-text">
+  While Excel worked well for basic cleaning, I quickly ran into limitations. Many of the datasets were too large to be processed efficiently, and some were too inconsistent or incomplete to support meaningful analysis.
+</p>
+
+
+
+          </div>
+        </section>
+
+        <!-- SQL Queries -->
+        <section id="sql" class="anchor-section">
+          <h2>SQL Queries</h2>
+          <div class="box">
+           <!-- Hourly Data -->
+<h3 style="color: orange; margin-top: 20px;">Hourly Data</h3>
+<ul class="custom-bullets">
+  <li>hourlyCalories.csv</li>
+  <li>hourlySteps.csv</li>
+  <li>hourlyIntensities.csv</li>
+</ul>
+<p class="proback-text">
+  After uploading the hourly datasets to BigQuery, I ran a few quick queries to ensure the data had been imported correctly.
+</p>
+
+            <!-- Upload checks code block -->
+            <details class="code-collapse">
+              <summary>Upload Checks — SQL (click to expand)</summary>
+              <pre><code class="language-sql">-- Row count
+SELECT COUNT(*) AS row_count
+FROM `bellabeat-461300.fittracker.hourly_calories`;
+
+-- Check for NULL values in columns
+SELECT
+  COUNTIF(Id IS NULL) AS id_nulls,
+  COUNTIF(ActivityHour IS NULL) AS activity_hour_nulls,
+  COUNTIF(Calories IS NULL) AS calories_nulls
+FROM `bellabeat-461300.fittracker.hourly_calories`;
+
+-- Preview Data
+SELECT *
+FROM `bellabeat-461300.fittracker.hourly_calories`
+LIMIT 10;</code></pre>
+            </details>
+
+            <p class="proback-text">
+              After running the three queries on each of the hourly datasets, I was confident everything uploaded correctly. Because the datasets shared some common data (like ID and activity hour) but each also contained different information (such as calories, steps, and intensities), I combined them into one comprehensive hourly dataset.
+            </p>
+
+            <!-- Merge code block -->
+            <details class="code-collapse">
+              <summary>Merge Hourly Datasets — SQL (click to expand)</summary>
+              <pre><code class="language-sql">-- Merge hourly calories, steps, and intensities datasets using LEFT JOIN on Id and ActivityHour
+SELECT 
+  A.Id, 
+  A.ActivityHour AS activity_hour, 
+  A.Calories, 
+  C.StepTotal AS step_total, 
+  I.TotalIntensity AS total_intensity, 
+  I.AverageIntensity AS average_intensity
+FROM `bellabeat-461300.fittracker.hourly_calories` A
+LEFT JOIN `bellabeat-461300.fittracker.hourly_steps` C
+  ON A.Id = C.Id AND A.ActivityHour = C.ActivityHour
+LEFT JOIN `bellabeat-461300.fittracker.hourly_intensities` I
+  ON A.Id = I.Id AND A.ActivityHour = C.ActivityHour;</code></pre>
+            </details>
+            <p class="proback-text">
+              The resulting data file: <strong>hourlyMerged.csv</strong> can now be uploaded into RStudio to be further processed.
+              <br><br>
+              <strong>NOTE:</strong> I reintroduced the ‘merged’ wordage here because that is more representative of the data now (which we just merged).
+            </p>
+<!-- Daily/Sleep Data -->
+<h3 style="color: orange; margin-top: 20px;">Daily/Sleep Data</h3>
+<ul class="custom-bullets">
+  <li>‘dailyActivity.csv’</li>
+  <li>‘dailyCalories.csv’</li>
+  <li>‘dailyIntensities.csv’</li>
+  <li>‘dailySteps.csv’</li>
+  <li>‘sleepDay.csv’</li>
+</ul>
+<p class="proback-text">
+  The daily and sleep datasets above were uploaded into BigQuery. Once again, I ran a few quick checks to ensure everything was imported correctly.
+</p>
+
+
+<!-- Upload check code block -->
+<details class="code-collapse">
+  <summary>Upload Check — SQL (click to expand)</summary>
+  <pre><code class="language-sql">-- Row count for dailyActivity
+SELECT COUNT(*) AS row_count
+FROM `bellabeat-461300.fittracker.dailyActivity`;
+
+-- Check for NULL values in dailyActivity
+SELECT
+  COUNTIF(Id IS NULL) AS id_nulls,
+  COUNTIF(ActivityDate IS NULL) AS activity_date_nulls,
+  COUNTIF(TotalSteps IS NULL) AS total_steps_nulls
+FROM `bellabeat-461300.fittracker.dailyActivity`;
+
+-- Preview Data
+SELECT *
+FROM `bellabeat-461300.fittracker.dailyActivity`
+LIMIT 10;</code></pre>
+</details>
+
+<p class="proback-text">
+  I ran the same set of queries on the dailyActivity dataset as well. Next, I decided to combine the dailyActivity and sleepDay datasets as they had some corresponding data. Bringing the two datasets together also made things simpler, letting me focus on just two main datasets: hourly and daily/sleep.
+</p>
+
+<!-- Merge dailyActivity and sleepDay code block -->
+<details class="code-collapse">
+  <summary>Merge dailyActivity and sleepDay — SQL (click to expand)</summary>
+  <pre><code class="language-sql">-- Merge dailyActivity and sleepDay datasets on Id and ActivityDate
+SELECT 
+  D.Id, 
+  D.ActivityDate,
+  D.TotalSteps,
+  D.Calories,
+  D.TotalDistance,
+  S.SleepDay,
+  S.TotalSleepRecords,
+  S.TotalMinutesAsleep,
+  S.TotalTimeInBed
+FROM `bellabeat-461300.fittracker.dailyActivity` D
+LEFT JOIN `bellabeat-461300.fittracker.sleepDay` S
+  ON D.Id = S.Id AND D.ActivityDate = S.SleepDay;</code></pre>
+</details>
+
+<p class="proback-text">
+  The resulting merged data file: <strong>dailyMerged.csv</strong> can now be uploaded into RStudio to be further processed.
+  <br><br>
+  <strong>NOTE:</strong> I reintroduced the ‘merged’ wordage here because that is more representative of the data (which we merged).
+</p>
+
+          </div>
+        </section>
+<!-- RStudio Analysis -->
+<section id="rstudio" class="anchor-section">
+  <h2>RStudio Analysis</h2>
+  <div class="box">
+    <h3 style="color: orange; margin-top: 20px;">Hourly Data</h3>
+    <ul class="custom-bullets">
+      <li>‘hourlyMerged.csv’</li>
+    </ul>
+    <p class="proback-text">
+      First, I loaded the packages that I will be needing for the hourly and daily data analysis in RStudio. Next, I uploaded my hourlyMerged dataset. After uploading, I ran a quick check to make sure the data imported properly.
+    </p>
+
+<!-- Load packages and upload dataset -->
+<details class="code-collapse">
+  <summary>Load Packages & Upload Dataset — R Code (click to expand)</summary>
+  <pre><code class="language-r"># Load packages needed for analysis
+install.packages("tidyverse")
+install.packages("lubridate")
+install.packages("qwraps2")
+
+library(tidyverse)
+library(lubridate)
+library(qwraps2)
+
+# Import hourlyMerged dataset
+hourly_df <- read_csv("hourlyMerged.csv")
+
+# Preview the data
+head(hourly_df)
+
+# Output:
+# A tibble: 6 x 10
+#         Id activity_hour       Calories step_total total_intensity average_intensity activityDate time
+#      <dbl> <dttm>                 <dbl>      <dbl>           <dbl>             <dbl> <date>       <dttm>
+# 1 7086361926 2016-04-23 01:00:00       68          0               1            0.0167 2016-04-23   2025-07-15 01:00:00
+# 2 7086361926 2016-04-23 01:00:00       68          0               1            0.0167 2016-04-23   2025-07-15 01:00:00
+# 3 7086361926 2016-04-23 01:00:00       68          0               1            0.0167 2016-04-23   2025-07-15 01:00:00
+# 4 7086361926 2016-04-23 01:00:00       68          0               2            0.0333 2016-04-23   2025-07-15 01:00:00
+# 5 7086361926 2016-04-23 01:00:00       68          0               2            0.0333 2016-04-23   2025-07-15 01:00:00
+# 6 7086361926 2016-04-23 01:00:00       68          0               2            0.0333 2016-04-23   2025-07-15 01:00:00
+
+# Check structure
+str(hourly_df)
+
+# Check dimensions
+dim(hourly_df)
+
+# Output:
+# [1] 15393213       10
+</code></pre>
+</details>
+
+<!-- Split activity_hour into activityDate and TimeOfDay -->
+<p class="proback-text">
+  After confirming the file uploaded correctly, I decided to analyze the data by both day of the week and time of day. This allowed me to examine user activity across a Monday–Sunday timeframe and throughout different parts of the day. To do this, I first split the activity_hour column—which contains both date and time values—into two separate columns: activityDate for the date and time for the time. I then converted the activityDate column into a proper date format and used it to create a new column indicating the day of the week. Similarly, I converted the time column and categorized each entry into one of four time-of-day segments—Night, Morning, Afternoon, and Evening—based on the activity hour. You can see the following code below.
+</p>
+<details class="code-collapse">
+  <summary>Split Date & Time Columns — R Code (click to expand)</summary>
+  <pre><code class="language-r"># Split data and assign metrics
+hourly_df$activityDate <- str_split_fixed(hourly_df$activity_hour, " ", n = 2)[, 1]
+hourly_df$time <- str_split_fixed(hourly_df$activity_hour, " ", n = 2)[, 2]
+
+# Convert to proper formats
+hourly_df$activityDate <- as.Date(hourly_df$activityDate, format = "%Y-%m-%d")
+hourly_df$DayOfWeek <- format(as.Date(hourly_df$activityDate), "%A")
+
+# Categorize time into segments
+breaks <- hour(hms("00:00:00", "05:59:59", "11:59:59", "17:59:59", "23:59:59"))
+labels <- c("Night", "Morning", "Afternoon", "Evening")
+hourly_df$time <- as.POSIXct(hourly_df$time, format = "%H:%M:%S")
+hourly_df$TimeOfDay <- cut(x = hour(hourly_df$time), breaks = breaks, labels = labels, include.lowest = TRUE)
+
+# Check for NA values
+colSums(is.na(hourly_df))
+
+# Output:
+#                Id     activity_hour          Calories        step_total   total_intensity 
+#                 0                 0                 0                 0                 0 
+# average_intensity      activityDate              time         DayOfWeek         TimeOfDay 
+#                 0                 0            650227                 0            650227
+</code></pre>
+</details>
+<p class="proback-text">
+  <!-- Placeholder for explanation of split date & time results -->
+  I went ahead and also performed a correlation test. I just wanted to see any potential relationships amongst the data. This could help identify how different variables of data might be connected.
+</p>
+
+<!-- Correlation tests -->
+<details class="code-collapse">
+  <summary>Correlation Tests — R Code (click to expand)</summary>
+  <pre><code class="language-r"># Pearson correlation tests
+with(hourly_df, cor.test(average_intensity, Calories, method = "pearson"))
+with(hourly_df, cor.test(total_intensity, Calories, method = "pearson"))
+with(hourly_df, cor.test(total_intensity, step_total, method = "pearson"))
+with(hourly_df, cor.test(average_intensity, step_total, method = "pearson"))
+with(hourly_df, cor.test(step_total, Calories, method = "pearson"))
+
+# Output examples:
+# Pearson's product-moment correlation
+# data:  average_intensity and Calories
+# t = 147.75, df = 15393211, p-value < 2.2e-16
+# alternative hypothesis: true correlation is not equal to 0
+# 95 percent confidence interval: 0.03713366 0.03813135
+# sample estimates: cor 0.03763252
+
+# data:  total_intensity and Calories
+# cor 0.03763252
+
+# data:  total_intensity and step_total
+# cor 0.04351006
+
+# data:  average_intensity and step_total
+# cor 0.04351006
+
+# data:  step_total and Calories
+# cor 0.814022
+</code></pre>
+</details>
+<p class="proback-text">
+  <!-- Placeholder for explanation of correlation test results -->
+  Interestingly, there didn’t appear to be any strong or meaningful linear correlation between intensity and steps taken, or between intensity and calories burned. On the other hand, the number of steps has a strong positive linear correlation with calories burned. This makes sense, as generally the more steps you take the more calories you’re likely to burn. Since the dataset was already grouped by time of day, I wanted to take a closer look at when participants were most or least active. I first assumed that activity levels would peak in the morning and evening—times because that usually aligns with common workout windows. But that assumption might not represent weekends, when people’s schedules tend to vary. To take a closer look, I used the next two code blocks to check out activity levels at different times of day, from Sunday through Saturday.
+</p>
+
+    <!-- Time-of-day summaries -->
+    <details class="code-collapse">
+      <summary>Time-of-Day Summaries — R Code (click to expand)</summary>
+      <pre><code class="language-r"># Filter data for "Morning" time period and select relevant columns
+morninghr <- hourly_df %>%
+  filter(TimeOfDay == "Morning") %>%
+  select(step_total, total_intensity, Calories)
+
+# View summary statistics for the morning activity
+summary(morninghr)
+
+# Output:
+   step_total     total_intensity     Calories    
+ Min.   :   0.0   Min.   :  0.00   Min.   : 42.0  
+ 1st Qu.:   0.0   1st Qu.:  0.00   1st Qu.: 68.0  
+ Median : 104.0   Median :  3.00   Median : 84.0  
+ Mean   : 374.8   Mean   : 12.06   Mean   :101.7  
+ 3rd Qu.: 467.0   3rd Qu.: 16.00   3rd Qu.:117.0  
+ Max.   :8976.0   Max.   :180.00   Max.   :544.0  
+
+# Filter data for "Afternoon" time period and select relevant columns
+afternoonhr <- hourly_df %>%
+  filter(hourly_df$TimeOfDay == "Afternoon") %>%
+  select(c(step_total, total_intensity, Calories))
+
+# View summary statistics for the afternoon activity
+summary(afternoonhr)
+
+# Output:
+   step_total      total_intensity     Calories    
+ Min.   :    0.0   Min.   :  0.00   Min.   : 42.0  
+ 1st Qu.:   37.0   1st Qu.:  0.00   1st Qu.: 77.0  
+ Median :  259.0   Median :  3.00   Median : 96.0  
+ Mean   :  519.6   Mean   : 12.06   Mean   :115.9  
+ 3rd Qu.:  620.0   3rd Qu.: 16.00   3rd Qu.:131.0  
+ Max.   :10554.0   Max.   :180.00   Max.   :948.0  
+
+# Filter data for "Evening" time period and select relevant columns
+eveninghr <- hourly_df %>%
+  filter(hourly_df$TimeOfDay == "Evening") %>%
+  select(c(step_total, total_intensity, Calories))
+
+# View summary statistics for the evening activity
+summary(eveninghr)
+
+# Output:
+   step_total     total_intensity     Calories    
+ Min.   :   0.0   Min.   :  0.00   Min.   : 42.0  
+ 1st Qu.:   0.0   1st Qu.:  0.00   1st Qu.: 69.0  
+ Median : 114.0   Median :  3.00   Median : 86.0  
+ Mean   : 370.9   Mean   : 12.06   Mean   :102.1  
+ 3rd Qu.: 398.0   3rd Qu.: 16.00   3rd Qu.:113.0  
+ Max.   :8586.0   Max.   :180.00   Max.   :834.0  
+
+# Filter data for "Night" time period and select relevant columns  
+nighthr <- hourly_df %>%
+  filter(hourly_df$TimeOfDay == "Night") %>% 
+  select(c(step_total, total_intensity, Calories))
+
+# View summary statistics for the night activity
+summary(nighthr)
+
+# Output:
+   step_total      total_intensity     Calories     
+ Min.   :   0.00   Min.   :  0.00   Min.   : 42.00  
+ 1st Qu.:   0.00   1st Qu.:  0.00   1st Qu.: 56.00  
+ Median :   0.00   Median :  3.00   Median : 68.00  
+ Mean   :  21.28   Mean   : 12.06   Mean   : 71.68  
+ 3rd Qu.:   0.00   3rd Qu.: 16.00   3rd Qu.: 83.00  
+ Max.   :2844.00   Max.   :180.00   Max.   :669.00  
+</code></pre>
+    </details>
+    <p class="proback-text">
+      Looking at the summaries, it’s clear that step counts are lower at night, ~21 steps on average—which makes sense since most people are asleep during that time. To get a better idea of activity levels throughout the day, I decided to focus on calculating the average steps and calories burned by time of day.
+    </p>
+        <!-- Comparative summary table -->
+    <details class="code-collapse">
+      <summary>Comparative Summary — R Code (click to expand)</summary>
+      <pre><code class="language-r"># Comparative list of all of the day-by-day summaries (only mean of steps and calories)
+timeofday_summary1 <- data.frame(
+  TimeOfDay = c("Afternoon", "Morning", "Evening", "Night"),
+  Total_Steps_Avg = c(519.599624506321, 374.758472938824, 370.922424933024, 21.2780518695702),
+  Calories_Avg = c(115.86621, 101.66459, 102.14637, 71.73854)
+)</code></pre>
+    </details>
+
+    <p class="proback-text">
+      The following code creates a bar graph that represents the average calories burned and steps taken each day of the week, based on the findings above. It helps visualize how both calories and steps vary across different times of the day.
+    </p>
+
+    <!-- Bar graph visualizations -->
+    <details class="code-collapse">
+      <summary>Visualization — R Code (click to expand)</summary>
+      <pre><code class="language-r"># Visual bar graph for average calories by time of day
+ggplot(timeofday_summary1, aes(x = reorder(TimeOfDay, -Calories_Avg), y = Calories_Avg)) +
+  geom_bar(stat = "identity", fill = "#FF69B4") +
+  labs(title = "Average Calories by Time of Day", x = "", y = "Average Calories")
+
+# Output:
+# (Plot showing Average Calories by Time of Day)
+
+# Visual bar graph for average steps by time of day
+ggplot(timeofday_summary1, aes(x = reorder(TimeOfDay, -Total_Steps_Avg), y = Total_Steps_Avg)) +
+  geom_bar(stat = "identity", fill = "pink") +
+  labs(title = "Average Steps by Time of Day", x = "", y = "Average Total Steps")
+
+# Output:
+# (Plot showing Average Steps by Time of Day)</code></pre>
+    </details>
+      <!-- Visualization Images -->
+    <div class="image-pair">
+      <div class="graph-card">
+        <img src="images/Average Calories by Time of Day.png" alt="Average Calories by Time of Day graph" class="graph-image" />
+      </div>
+
+      <div class="graph-card">
+        <img src="images/Average Steps by Time of Day.png" alt="Average Steps by Time of Day graph" class="graph-image" />
+      </div>
+    </div>
+<h3 style="color: orange; margin-top: 20px;">Daily/Sleep Data</h3>
+<ul class="custom-bullets">
+  <li>‘dailyMerged.csv’</li>
+</ul>
+<p class="proback-text">
+  I uploaded my dailyMerged dataset into RStudio and checked that it imported correctly. After uploading, I ran a quick preview and structure check to ensure all variables were in the expected format.
+</p>
+
+
+<!-- Load and preview dailyMerged dataset -->
+<details class="code-collapse">
+  <summary>Load & Preview Daily Dataset — R Code (click to expand)</summary>
+  <pre><code class="language-r"># Import dailyMerged dataset
+daily_df <- read_csv("dailyMerged.csv")
+
+# Preview the data
+head(daily_df)
+
+# Output:
+# A tibble: 6 × 14
+#        Id     ActivityDate TotalSteps TotalDistance TrackerDistance LoggedActivitiesDistance LongerDistance ShorterDistance
+#     <dbl>     <chr>            <dbl>         <dbl>           <dbl>                    <dbl>          <dbl>           <dbl>
+#  1 1644430081  4/30/2016        18213         13.2            13.2                         0           3.77            9.46
+#  2 2347167796  4/14/2016        10129          6.70            6.70                        0           2.76            3.94
+#  3 3977333714  4/16/2016        13459          9.00            9.00                        0           6.03            2.97
+#  4 3977333714  4/17/2016        10415          6.97            6.97                        0           3.05            3.92
+#  5 3977333714  4/19/2016        12414          8.78            8.78                        0           4.69            3.96
+#  6 3977333714  4/20/2016        11658          7.83            7.83                        0           4.55            3.28
+# ℹ 6 more variables: HeavyActiveMinutes <dbl>, LightActiveMinutes <dbl>, Calories <dbl>, TotalSleepRecords <dbl>,
+#   TotalMinutesAsleep <dbl>, TotalTimeInBed <dbl>
+
+# Check the structure of the data
+str(daily_df)
+
+# Check the dimensions
+dim(daily_df)
+
+# Output:
+# spc_tbl_ [410 × 14] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+# [1] 410 14
+</code></pre>
+</details>
+<p class="proback-text">
+  First, I analyzed how frequently users engaged with their smart devices (though the specific device types remain unknown). My goal was to understand how many Bellabeat users were consistently using their devices versus those who hardly used them. This could give a better sense of how engaged users are overall.
+</p>
+
+<!-- User device usage analysis -->
+<details class="code-collapse">
+  <summary>User Device Usage — R Code (click to expand)</summary>
+  <pre><code class="language-r"># Assign usage type
+user_usage <- daily_df %>%
+  count(Id) %>% 
+  mutate(user_type = case_when(
+    n >= 1 & n <= 10 ~ "sparse",
+    n >= 11 & n <= 20 ~ "modest",
+    n >= 21 & n <= 31 ~ "frequent"
+  ))
+
+# Assign usage percentage
+user_usage_percent <- user_usage %>%
+  count(user_type) %>%
+  mutate(
+    total_percent = n / sum(n),
+    labels = scales::percent(total_percent),
+    user_type = factor(user_type, levels = c("frequent", "modest", "sparse"))
+  )
+
+# Check results
+print(user_usage_percent)
+
+# Output:
+# A tibble: 3 × 4
+# user_type     n total_percent labels
+# <fct>     <int>         <dbl> <chr> 
+# 1 frequent     12         0.5   50%   
+# 2 modest        3         0.125 12%   
+# 3 sparse        9         0.375 38% 
+
+# Create ggplot donut chart
+ggplot(user_usage_percent, aes(x = 2, y = total_percent, fill = user_type)) +
+  geom_bar(stat = "identity", width = 1, color = "white") +
+  coord_polar("y") +
+  xlim(0.5, 2.5) +
+  scale_fill_manual(values = c(
+    "frequent" = "#2a9d8f", 
+    "modest" = "#70c1b3", 
+    "sparse" = "#b2dfdb"
+  )) +
+  geom_text(aes(label = labels), 
+            position = position_stack(vjust = 0.5), 
+            color = "white", size = 4) +
+  theme_void() +
+  labs(title = "Smart Device Usage Frequency") +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    legend.position = "bottom",
+    legend.title = element_blank()
+  )
+</code></pre>
+</details>
+<!-- Donut Chart Visualization -->
+<div class="image-pair">
+  <div class="graph-card">
+    <img src="images/donut chart.png" alt="Smart Device Usage Frequency Donut Chart" class="graph-image" />
+  </div>
+</div>
+<p class="proback-text">
+  <!-- Placeholder for descriptive text about the donut chart -->
+  I ran another correlation test—similar to the one I used with the hourly dataset—to explore the relationship between sleep and activity levels.
+</p>
+<!-- Correlation Tests: Sleep vs Activity -->
+<details class="code-collapse">
+  <summary>Correlation Tests — Daily Sleep vs Activity — R Code (click to expand)</summary>
+  <pre><code class="language-r"># Pearson correlation test: total minutes asleep vs heavy active minutes
+with(daily_df, cor.test(TotalMinutesAsleep, HeavyActiveMinutes, method = "pearson"))
+
+# Output:
+# Pearson's product-moment correlation
+# data:  TotalMinutesAsleep and HeavyActiveMinutes
+# t = -3.7286, df = 408, p-value = 0.0002197
+# alternative hypothesis: true correlation is not equal to 0
+# 95 percent confidence interval:
+#  -0.27356474 -0.08619484
+# sample estimates:
+#        cor 
+# -0.1815268 
+
+# Pearson correlation test: total minutes asleep vs light/non active minutes
+with(daily_df, cor.test(TotalMinutesAsleep, LightActiveMinutes, method = "pearson"))
+
+# Output:
+# Pearson's product-moment correlation
+# data:  TotalMinutesAsleep and LightActiveMinutes
+# t = -14.644, df = 408, p-value < 2.2e-16
+# alternative hypothesis: true correlation is not equal to 0
+# 95 percent confidence interval:
+#  -0.6470247 -0.5196501
+# sample estimates:
+#        cor 
+# -0.5869577
+
+# Pearson correlation test: total minutes asleep vs calories
+with(daily_df, cor.test(TotalMinutesAsleep, Calories, method = "pearson"))
+
+# Output:
+# Pearson's product-moment correlation
+# data:  TotalMinutesAsleep and Calories
+# t = -0.64061, df = 408, p-value = 0.5221
+# alternative hypothesis: true correlation is not equal to 0
+# 95 percent confidence interval:
+#  -0.12815287  0.06534893
+# sample estimates:
+#         cor 
+# -0.03169899 
+
+# Plot sleep vs light/non activity
+library(ggplot2)
+
+ggplot(data = daily_df, aes(x = TotalMinutesAsleep, y = LightActiveMinutes)) +
+  geom_jitter(width = 0.3, height = 0.3, alpha = 0.6, color = "blue") +
+  geom_smooth(method = "lm", se = FALSE, color = "darkred") +
+  labs(
+    x = "Total minutes asleep",
+    y = "Light/Non-active minutes",
+    title = "Sleep vs. Light/Non Activity Patterns"
+  )
+</code></pre>
+</details>
+<!-- Scatterplot Visualization: Sleep vs Light/Non Activity -->
+<div class="image-pair">
+  <div class="graph-card">
+    <img src="images/Sleep vs LightNon Activity Patterns.png" alt="Sleep vs Light/Non Activity scatterplot" class="graph-image" />
+  </div>
+</div>
+<p class="proback-text">
+  <!-- Placeholder for descriptive text about the sleep correlation analysis -->
+  The results show that people who sleep more tend to have fewer light/non-active minutes during the day—a moderately strong relationship. There’s also a slight decrease in active minutes with more sleep, but that correlation is much weaker. Overall, the negative correlations suggest that more sleep may be linked to less sedentary time. The graph above supports this, indicating that individuals who get more sleep may also be more active overall.
+<br>To dig deeper into the data, I broke it down by day of the week to compare sleep and light/non-active minutes across different days. In the code block below, I filtered the data by weekday and generated summary stats for each group. This helps show when users are getting the most—or least—engagement with their smart device. These summaries show how sleep and activity levels change throughout the week.
+</p>
+<!-- Your New Code Section -->
+<details class="code-collapse">
+  <summary>Weekday Summaries — R Code (click to expand)</summary>
+  <pre><code class="language-r">
+# Convert the ActivityDate into date format
+daily_df$ActivityDate <- as.Date(daily_df$ActivityDate, format = "%m/%d/%Y")
+
+# Create a weekday column
+daily_df$weekday <- weekdays(daily_df$ActivityDate)
+
+# Separate Monday data from daily
+monday_data <- daily_df %>%
+  filter(weekday == "Monday") %>%
+  select(-c(Id, ActivityDate))
+
+# Summary of the new separated Monday data
+# Output:
+Min.   : 1831   Min.   : 1.170   Min.   : 1.170   Min.   :0.0000           Min.   :0.000  
+1st Qu.: 6937   1st Qu.: 4.788   1st Qu.: 4.788   1st Qu.:0.0000           1st Qu.:0.410  
+Median : 9831   Median : 6.815   Median : 6.815   Median :0.0000           Median :1.975  
+Mean   : 9273   Mean   : 6.541   Mean   : 6.536   Mean   :0.3113           Mean   :2.519  
+3rd Qu.:11559   3rd Qu.: 8.265   3rd Qu.: 8.265   3rd Qu.:0.0000           3rd Qu.:3.980  
+Max.   :16520   Max.   :11.050   Max.   :11.050   Max.   :3.1678           Max.   :8.020  
+ShorterDistance   HeavyActiveMinutes   LightActiveMinutes    Calories    TotalSleepRecords
+Min.   :1.120     Min.   :  0.00       Min.   : 322.0        Min.   :1248   Min.   :1.000    
+1st Qu.:3.045     1st Qu.: 10.25       1st Qu.: 882.5        1st Qu.:1998   1st Qu.:1.000    
+Median :3.930     Median : 44.50       Median : 931.5        Median :2232   Median :1.000    
+Mean   :4.016     Mean   : 49.80       Mean   : 940.8        Mean   :2432   Mean   :1.109    
+3rd Qu.:4.855     3rd Qu.: 77.50       3rd Qu.:1000.0        3rd Qu.:3007   3rd Qu.:1.000    
+Max.   :6.790     Max.   :167.00       Max.   :1278.0        Max.   :4157   Max.   :2.000    
+TotalMinutesAsleep  TotalTimeInBed    weekday         
+Min.   : 62.0      Min.   : 65.0     Length:46         
+1st Qu.:368.5      1st Qu.:399.8     Class :character  
+Median :434.0      Median :467.5     Mode  :character  
+Mean   :419.5      Mean   :457.3                     
+3rd Qu.:492.8      3rd Qu.:528.8                     
+Max.   :796.0      Max.   :961.0 
+
+# Calculate average steps, activity, sleep, and calories for Mondays only
+mon_data_summary <- monday_data %>%
+  summarise(
+    Total_Steps_Avg = mean(TotalSteps, na.rm = TRUE),
+    Active_Minutes_Avg = mean(HeavyActiveMinutes, na.rm = TRUE),
+    Sedentary_Minutes_Avg = mean(LightActiveMinutes, na.rm = TRUE),
+    Calories_Avg = mean(Calories, na.rm = TRUE),
+    Total_Hours_Asleep_Avg = mean(TotalMinutesAsleep / 60, na.rm = TRUE)
+  )
+
+# View Monday data summary
+# Output:
+  Total_Steps_Avg Active_Minutes_Avg Sedentary_Minutes_Avg Calories_Avg Total_Hours_Asleep_Avg
+1        9273.217           49.80435              940.7826     2431.978               6.991667
+
+# Separate Tuesday data from daily
+tuesday_data <- daily_df %>%
+  filter(weekday == "Tuesday") %>%
+  select(-c(Id, ActivityDate))
+
+# Summary of the new separated Tuesday data
+# Output:
+Min.   :  254   Min.   : 0.16   Min.   : 0.16   Min.   :0.0000           Min.   :0.000   Min.   :0.160  
+1st Qu.: 6582   1st Qu.: 4.95   1st Qu.: 4.95   1st Qu.:0.0000           1st Qu.:0.000   1st Qu.:2.580  
+Median : 9648   Median : 6.76   Median : 6.76   Median :0.0000           Median :2.400   Median :3.950  
+Mean   : 9183   Mean   : 6.43   Mean   : 6.43   Mean   :0.1387           Mean   :2.535   Mean   :3.888  
+3rd Qu.:11886   3rd Qu.: 8.39   3rd Qu.: 8.39   3rd Qu.:0.0000           3rd Qu.:4.510   3rd Qu.:5.030  
+Max.   :16358   Max.   :12.85   Max.   :12.85   Max.   :2.2531           Max.   :8.430   Max.   :8.410  
+HeavyActiveMinutes LightActiveMinutes    Calories    TotalSleepRecords TotalMinutesAsleep TotalTimeInBed 
+Min.   :  0.00     Min.   : 754.0     Min.   :1141   Min.   :1.000     Min.   :103.0      Min.   :121.0  
+1st Qu.:  7.00     1st Qu.: 897.0     1st Qu.:2026   1st Qu.:1.000     1st Qu.:342.0      1st Qu.:391.0  
+Median : 43.00     Median : 956.0     Median :2291   Median :1.000     Median :417.0      Median :446.0  
+Mean   : 50.66     Mean   : 956.6     Mean   :2496   Mean   :1.108     Mean   :404.5      Mean   :443.3  
+3rd Qu.: 86.00     3rd Qu.:1014.0     3rd Qu.:2944   3rd Qu.:1.000     3rd Qu.:465.0      3rd Qu.:498.0  
+Max.   :141.00     Max.   :1345.0     Max.   :4092   Max.   :3.000     Max.   :750.0      Max.   :775.0  
+weekday         
+Length:65         
+Class :character  
+Mode  :character  
+	
+# Calculate average steps, activity, sleep, and calories for Tuesdays only
+tues_data_summary <- tuesday_data %>%
+  summarise(
+    Total_Steps_Avg = mean(TotalSteps, na.rm = TRUE),
+    Active_Minutes_Avg = mean(HeavyActiveMinutes, na.rm = TRUE),
+    Sedentary_Minutes_Avg = mean(LightActiveMinutes, na.rm = TRUE),
+    Calories_Avg = mean(Calories, na.rm = TRUE),
+    Total_Hours_Asleep_Avg = mean(TotalMinutesAsleep / 60, na.rm = TRUE)
+  )
+
+# View Tuesday data summary
+# Output:
+  Total_Steps_Avg Active_Minutes_Avg Sedentary_Minutes_Avg Calories_Avg Total_Hours_Asleep_Avg
+1        9182.692           50.66154              956.6308       2496.2               6.742308
+
+# Separate Wednesday data from daily
+wednesday_data <- daily_df %>%
+  filter(weekday == "Wednesday") %>%
+  select(-c(Id, ActivityDate))
+
+# Summary of the new separated Wednesday data
+# Output:
+Min.   :  356   Min.   : 0.250   Min.   : 0.250   Min.   :0.0000           Min.   :0.000   Min.   :0.250  
+1st Qu.: 5318   1st Qu.: 3.748   1st Qu.: 3.748   1st Qu.:0.0000           1st Qu.:0.000   1st Qu.:2.418  
+Median : 8686   Median : 6.175   Median : 6.175   Median :0.0000           Median :1.805   Median :3.590  
+Mean   : 8023   Mean   : 5.720   Mean   : 5.720   Mean   :0.0951           Mean   :2.062   Mean   :3.652  
+3rd Qu.:10516   3rd Qu.: 7.418   3rd Qu.: 7.418   3rd Qu.:0.0000           3rd Qu.:2.910   3rd Qu.:5.063  
+Max.   :15108   Max.   :12.190   Max.   :12.190   Max.   :2.0921           Max.   :9.810   Max.   :7.110  
+HeavyActiveMinutes LightActiveMinutes    Calories    TotalSleepRecords TotalMinutesAsleep TotalTimeInBed
+Min.   :  0.00     Min.   : 320.0     Min.   :1377   Min.   :1.000     Min.   :152.0      Min.   :260   
+1st Qu.:  0.00     1st Qu.: 878.5     1st Qu.:1789   1st Qu.:1.000     1st Qu.:392.0      1st Qu.:425   
+Median : 33.50     Median : 924.5     Median :2207   Median :1.000     Median :444.5      Median :469   
+Mean   : 38.08     Mean   : 922.4     Mean   :2378   Mean   :1.152     Mean   :434.7      Mean   :470   
+3rd Qu.: 58.50     3rd Qu.: 977.8     3rd Qu.:2942   3rd Qu.:1.000     3rd Qu.:477.0      3rd Qu.:525   
+Max.   :130.00     Max.   :1138.0     Max.   :4079   Max.   :3.000     Max.   :658.0      Max.   :679   
+weekday         
+Length:66         
+Class :character  
+Mode  :character  
+
+# Calculate average steps, activity, sleep and calories for Wednesday only
+wed_data_summary <- wednesday_data %>%
+  summarise(
+    Total_Steps_Avg = mean(TotalSteps, na.rm = TRUE),
+    Active_Minutes_Avg = mean(HeavyActiveMinutes, na.rm = TRUE),
+    Sedentary_Minutes_Avg = mean(LightActiveMinutes, na.rm = TRUE),
+    Calories_Avg = mean(Calories, na.rm = TRUE),
+    Total_Hours_Asleep_Avg = mean(TotalMinutesAsleep / 60, na.rm = TRUE)
+  )
+
+# View Wednesday data summary
+# Output:
+  Total_Steps_Avg Active_Minutes_Avg Sedentary_Minutes_Avg Calories_Avg Total_Hours_Asleep_Avg
+1        8022.864           38.07576              922.4242     2378.242               7.244697
+
+# Separate Thursday data from daily
+thursday_data <- daily_df %>%
+  filter(weekday == "Thursday") %>%
+  select(-c(Id, ActivityDate))
+
+# Summary of the new separated Thursday data
+# Output:
+Min.   :   17   Min.   : 0.010   Min.   : 0.010   Min.   :0.0000           Min.   :0.000   Min.   :0.010  
+1st Qu.: 4363   1st Qu.: 2.925   1st Qu.: 2.925   1st Qu.:0.0000           1st Qu.:0.000   1st Qu.:2.652  
+Median : 8752   Median : 6.355   Median : 6.355   Median :0.0000           Median :1.360   Median :3.610  
+Mean   : 8184   Mean   : 5.773   Mean   : 5.745   Mean   :0.1694           Mean   :1.912   Mean   :3.699  
+3rd Qu.:10971   3rd Qu.: 7.735   3rd Qu.: 7.735   3rd Qu.:0.0000           3rd Qu.:3.072   3rd Qu.:4.827  
+Max.   :19542   Max.   :15.010   Max.   :15.010   Max.   :4.0817           Max.   :7.720   Max.   :7.700  
+HeavyActiveMinutes LightActiveMinutes    Calories    TotalSleepRecords TotalMinutesAsleep TotalTimeInBed 
+Min.   :  0.00     Min.   :   2.0     Min.   : 257   Min.   :1.000     Min.   : 59.0      Min.   : 65.0  
+1st Qu.:  0.00     1st Qu.: 873.0     1st Qu.:1788   1st Qu.:1.000     1st Qu.:377.2      1st Qu.:416.0  
+Median : 23.00     Median : 951.5     Median :2168   Median :1.000     Median :423.5      Median :457.0  
+Mean   : 38.72     Mean   : 901.3     Mean   :2307   Mean   :1.031     Mean   :401.3      Mean   :434.9  
+3rd Qu.: 66.25     3rd Qu.: 993.2     3rd Qu.:2868   3rd Qu.:1.000     3rd Qu.:467.2      3rd Qu.:492.8  
+Max.   :184.00     Max.   :1299.0     Max.   :4900   Max.   :2.000     Max.   :545.0      Max.   :568.0  
+weekday         
+Length:64         
+Class :character  
+Mode  :character 
+
+# Calculate average steps, activity, sleep, and calories for Thursdays only
+thurs_data_summary <- thursday_data %>%
+  summarise(
+    Total_Steps_Avg = mean(TotalSteps, na.rm = TRUE),
+    Active_Minutes_Avg = mean(HeavyActiveMinutes, na.rm = TRUE),
+    Sedentary_Minutes_Avg = mean(LightActiveMinutes, na.rm = TRUE),
+    Calories_Avg = mean(Calories, na.rm = TRUE),
+    Total_Hours_Asleep_Avg = mean(TotalMinutesAsleep / 60, na.rm = TRUE)
+  )
+
+# View Thursday data summary
+# Output:
+  Total_Steps_Avg Active_Minutes_Avg Sedentary_Minutes_Avg Calories_Avg Total_Hours_Asleep_Avg
+1        8183.516           38.71875              901.3125     2306.672               6.688281
+
+# Separate Friday data from daily
+friday_data <- daily_df %>%
+  filter(weekday == "Friday") %>%
+  select(-c(Id, ActivityDate))
+
+# Summary of the new separated Friday data
+# Output:
+Min.   :   42   Min.   : 0.030   Min.   : 0.030   Min.   :0.00000          Min.   :0.000   Min.   :0.03   
+1st Qu.: 5563   1st Qu.: 3.680   1st Qu.: 3.680   1st Qu.:0.00000          1st Qu.:0.000   1st Qu.:2.67   
+Median : 8198   Median : 5.630   Median : 5.630   Median :0.00000          Median :0.880   Median :3.77   
+Mean   : 7901   Mean   : 5.512   Mean   : 5.512   Mean   :0.07341          Mean   :1.722   Mean   :3.78   
+3rd Qu.:10465   3rd Qu.: 7.110   3rd Qu.: 7.110   3rd Qu.:0.00000          3rd Qu.:3.150   3rd Qu.:4.91   
+Max.   :16556   Max.   :11.470   Max.   :11.470   Max.   :2.09215          Max.   :6.140   Max.   :7.24   
+HeavyActiveMinutes LightActiveMinutes    Calories    TotalSleepRecords TotalMinutesAsleep TotalTimeInBed 
+Min.   :  0.00     Min.   :   6.0     Min.   : 403   Min.   :1.00      Min.   : 82.0      Min.   : 85.0  
+1st Qu.:  0.00     1st Qu.: 899.0     1st Qu.:1850   1st Qu.:1.00      1st Qu.:355.0      1st Qu.:386.0  
+Median : 21.00     Median : 987.0     Median :2196   Median :1.00      Median :405.0     
+
+</code></pre>
+</details>
+<p class="proback-text">
+  <!-- Placeholder for descriptive text about the sleep correlation analysis -->
+I used the following code blocks to generate graphs that represent the results of the stat summaries:
+</p>
+<!-- Merge Daily Summaries -->
+<details class="code-collapse">
+  <summary>Merge Daily Summaries into Weekday Data Frame — R Code (click to expand)</summary>
+  <pre><code class="language-r">
+# merge daily sums into single data frame
+weekday_sum <- rbind(mon_data_summary, tues_data_summary, wed_data_summary, thurs_data_summary, fri_data_summary, sat_data_summary, sun_data_summary)
+
+# assign weekday names to the rows
+rownames(weekday_sum) <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
+</code></pre>
+</details>
+
+<!-- Sort Averages by Weekday -->
+<details class="code-collapse">
+  <summary>Sort Weekday Averages — R Code (click to expand)</summary>
+  <pre><code class="language-r">
+# avg steps
+sort(weekday_sum[[1]], decreasing = TRUE)
+# Output
+# [1] 9871.123 9273.217 9182.692 8183.516 8022.864 7901.404 7297.855
+
+# avg active min
+sort(weekday_sum[[2]], decreasing = TRUE)
+# Output
+# [1] 50.66154 50.28070 49.80435 38.90909 38.71875 38.07576 35.73684
+
+# avg non active min
+sort(weekday_sum[[3]], decreasing = TRUE)
+# Output
+# [1] 965.7719 956.6308 940.7826 927.2105 922.4242 901.3125 887.6727
+
+# avg calories 
+sort(weekday_sum[[4]], decreasing = TRUE)
+# Output
+# [1] 2506.895 2496.200 2431.978 2378.242 2329.649 2306.672 2276.600
+
+# avg hours asleep
+sort(weekday_sum[[5]], decreasing = TRUE)
+# Output
+# [1] 7.545758 7.244697 6.991667 6.984503 6.757018 6.742308 6.688281
+</code></pre>
+</details>
+
+<!-- Visualize Weekday Patterns -->
+<details class="code-collapse">
+  <summary>Visualize Weekday Patterns — R Code (click to expand)</summary>
+  <pre><code class="language-r">
+# average calories by weekday
+ggplot(data = weekday_sum, 
+       aes(x = reorder(as.character(row.names(weekday_sum)), -Calories_Avg), 
+           y = Calories_Avg)) +
+    geom_bar(stat = "identity", fill = "purple") +
+    labs(title = "Average Calories by Weekday", 
+         x = "Weekday", 
+         y = "Avg Calories") +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+# Output
+# Plot: Bar chart showing Average Calories by Weekday
+
+
+# average active minutes by weekday
+ggplot(data = weekday_sum, 
+       aes(x = reorder(as.character(row.names(weekday_sum)), -Active_Minutes_Avg), 
+           y = Active_Minutes_Avg)) +
+    geom_bar(stat = "identity", fill = "red") +
+    labs(title = "Average Active Minutes by Weekday", 
+         x = "Weekday", 
+         y = "Avg Active Minutes") +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+# Output
+# Plot: Bar chart showing Average Active Minutes by Weekday
+
+# average sedentary minutes by weekday
+ggplot(data = weekday_sum, 
+       aes(x = reorder(as.character(row.names(weekday_sum)), -Sedentary_Minutes_Avg), 
+           y = Sedentary_Minutes_Avg)) +
+    geom_bar(stat = "identity", fill = "green") +
+    labs(title = "Average Sedentary Minutes by Weekday", 
+         x = "Weekday", 
+         y = "Avg Sedentary Minutes") +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+# Output
+# Plot: Bar chart showing Average Sedentary Minutes by Weekday
+
+# average hours asleep by weekday
+ggplot(data = weekday_sum, 
+       aes(x = reorder(as.character(row.names(weekday_sum)), -Total_Hours_Asleep_Avg), 
+           y = Total_Hours_Asleep_Avg)) +
+    geom_bar(stat = "identity", fill = "blue") +
+    labs(title = "Average Hours of Sleep by Weekday", 
+         x = "Weekday", 
+         y = "Avg Hours of Sleep") +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+# Output
+# Plot: Bar chart showing Average Hours of Sleep by Weekday
+
+# average steps by weekday
+ggplot(data = weekday_sum, 
+       aes(x = reorder(as.character(row.names(weekday_sum)), -Total_Steps_Avg), 
+           y = Total_Steps_Avg)) +
+    geom_bar(stat = "identity", fill = "orange") +
+    labs(title = "Average Steps by Weekday", 
+         x = "Weekday", 
+         y = "Avg Steps") +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+# Output
+# Plot: Bar chart showing Average Steps by Weekday
+</code></pre>
+</details>
+<!-- Weekday Visualizations: Images -->
+<div style="text-align: center; margin-top: 30px;">
+
+  <!-- Top row: three images -->
+  <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 20px;">
+    <div>
+      <img src="images/avg calories final.png" alt="Average Calories by Weekday"
+           style="max-width: 350px; height: 300px; object-fit: cover; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: transform 0.3s;">
+    </div>
+    <div>
+      <img src="images/avg active minutes.png" alt="Average Active Minutes by Weekday"
+           style="max-width: 350px; height: 300px; object-fit: cover; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: transform 0.3s;">
+    </div>
+    <div>
+      <img src="images/Avg sedentary minutes.png" alt="Average Sedentary Minutes by Weekday"
+           style="max-width: 350px; height: 300px; object-fit: cover; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: transform 0.3s;">
+    </div>
+  </div>
+
+  <!-- Bottom row: two images -->
+  <div style="display: flex; justify-content: center; gap: 20px;">
+    <div>
+      <img src="images/avg hours of sleep by weekday.png" alt="Average Hours of Sleep by Weekday"
+           style="max-width: 350px; height: 300px; object-fit: cover; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: transform 0.3s;">
+    </div>
+    <div>
+      <img src="images/avg steps by weekday.png" alt="Average Steps by Weekday"
+           style="max-width: 350px; height: 300px; object-fit: cover; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: transform 0.3s;">
+    </div>
+  </div>
+<p class="proback-text">
+  <!-- Placeholder for descriptive text about the sleep correlation analysis -->
+Looking at the graphs, it becomes clear that the start of the workweek—Monday and Tuesday—along with Saturday, tend to be higher across most of the graphs. In contrast, Fridays consistently show lower values, suggesting that user activity tends to slow down as the week wraps up.
+</p>
+</div>
+
+<script>
+  // Slight hover effect for all images in this section
+  const images = document.querySelectorAll('div[style*="margin-top: 30px"] img');
+  images.forEach(img => {
+    img.addEventListener('mouseover', () => img.style.transform = 'translateY(-5px)');
+    img.addEventListener('mouseout', () => img.style.transform = 'translateY(0)');
+  });
+</script>
+  </div>
+        </section>
+
+     <!-- Key Insights -->
+<section id="insights" class="anchor-section">
+  <h2>Key Insights</h2>
+  <div class="box">
+    <ul class="insights-list">
+      <li><span class="proback-text">Users tend to average around 8,533 steps a day, which is below the recommended daily target of 10,000 steps.</span></li>
+      <li><span class="proback-text">Steps and calories burned have a strong positive relationship.</span></li>
+      <li><span class="proback-text">Activity levels vary throughout the week, with users generally being more active at the start of the workweek (Mon/Tues). Users tend to show the lowest activity levels on Fridays.</span></li>
+      <li><span class="proback-text">Users are currently averaging 6.76 hours of sleep a night, which is below the recommended 8 hours.</span></li>
+      <li><span class="proback-text">Users aren’t logging their weight often, even though it’s a key part of tracking health progress. Finding simple, user-friendly ways to encourage more regular weight entries could make a big difference.</span></li>
+      <li><span class="proback-text">Early in the data review process, I noticed several gaps and inconsistencies that point to possible issues with how the data is being recorded or collected. It’s also important to keep in mind the possibility of sampling bias when interpreting the results.</span></li>
+      <li><span class="proback-text">Although a few clear trends stand out, most patterns among participants are relatively subtle.</span></li>
+    </ul></p>
+  <!-- Proposal Section -->
+<section id="proposal" class="anchor-section">
+  <h3 style="color: orange; margin-top: 20px;">Proposal</h3>
+  <div class="box">
+    <p class="proback-text">
+      Users aren’t meeting the recommended daily step count, which suggests lower activity levels overall. This creates a great opportunity for Bellabeat to boost engagement through personalized step goals and fun in-app challenges. Real-time alerts, like showing how many steps are left to reach a daily goal, can help keep users motivated throughout the day. Tracking steps is especially helpful because it doesn’t require any manual input from the user, making it an easy and effective way to stay active. And since step count is closely tied to calories burned, encouraging more movement can help users stay on track with both their calorie and overall health goals.
+    </p>
+    <p class="proback-text">
+      In addition to physical activity, sleep data shows another area where users may be falling short. On average, users are getting less than the recommended 8 hours of sleep per night. Adding features like nighttime reminders or wind-down notifications could help promote better sleep habits. Since good sleep supports weight management, energy, and overall health, it’s important to encourage users to wear their smart device while they sleep. Bellabeat could advertise a new, more comfortable design specifically made for wearing overnight. This could help collect more accurate and consistent sleep data without asking users to do anything extra (except sleep more).
+    </p>
+    <p class="proback-text">
+      Another area for improvement is weight tracking. It’s an important metric for staying on top of health goals, but many users aren’t logging it regularly. Since Bellabeat’s current smart devices don’t appear to track weight automatically, users probably have to enter this information manually through the app, which may explain the low engagement. Introducing a smart scale that syncs with the Bellabeat app could make weight tracking easier and more convenient. The scale could automatically log weight at a set time each day, so users wouldn’t have to do anything extra—just step on the scale. To maintain a supportive environment, the app should include a clear disclaimer emphasizing that weight tracking is meant to support overall health, not promote unhealthy diet culture. Bellabeat should aim to foster a positive, empowering experience for users, building trust and focusing on long-term wellness rather than just weight loss.
+    </p>
+    <p class="proback-text">
+      Moreover, when looking at daily activity trends, Friday stood out as the most sedentary day overall. However, most patterns in the data were subtle, with only a few strong correlations. This suggests that user activity varies quite a bit from person to person. Bellabeat should consider tailoring reminders and goals to individual user needs. For example, while Friday was generally the least active day, it wasn’t the case for everyone, so the app could focus on motivating users on their own least active days. Making the app more personalized and user-specific could go a long way in boosting engagement and helping users reach their health goals.
+    </p>
+    <p class="proback-text">
+      That said, one challenge with the data was how incomplete and unreliable it was, probably because users weren’t logging their data consistently. This shows that Bellabeat needs to improve how it collects user information. It should also look for more effective ways to encourage users to log their data more regularly (as mentioned above). The goal would be to meet or outdo the standards set by similar products on the current market. Getting more users from different backgrounds and collecting more data would help reduce bias and give clearer and more helpful insights. To help keep users more engaged, Bellabeat could add a rewards system or share simple, helpful tips about health and wellness. When users understand the value of the data they’re tracking, they’re more likely to stay committed and feel more connected to their goals. In the end, the easier, more helpful, and more personalized the Bellabeat experience becomes, the more likely users are to stay engaged and motivated in their journey toward better health.
+    </p>
+    <p class="proback-text">
+      Finally, understanding the target audience more clearly could help improve Bellabeat’s overall marketing strategy. Right now, the branding and website seem to be mostly geared toward women—but that’s just a guess. By collecting more detailed user demographics, Bellabeat could tailor its marketing and create features that better fit the needs of different user groups.
+    </p>
+  </div>
+</section>
+
+          </div>
+        </section>
+
+        <!-- Acknowledgements -->
+<section id="acknowledgements" class="anchor-section">
+  <h2>Acknowledgements</h2>
+  <div class="box">
+    <p class="proback-text">
+      I would like to thank <strong>Ed Garcia</strong> for his guidance on RStudio. You can view his work here: 
+      <a href="https://www.kaggle.com/code/edgarcia1/bellabeat-case-study-analysis-and-visualizations" target="_blank">Ed Garcia Bellabeat Case Study</a>.
+    </p>
+    <p class="proback-text">
+      I would also like to thank <strong>Tom Leary</strong> for his guidance on grouping data by datatype. You can view his project here: 
+      <a href="https://tomleary.net/projects/capstone/" target="_blank">Tom Leary Capstone Project</a>.
+    </p>
+    <div class="proback-outro">
+      <h3>Thank you for checking out my project!</h3>
+      <p>You can also see my <a href="https://github.com/emelynataly77" target="_blank">GitHub</a> for all code and resources.</p>
+    </div>
+  </div>
+</section>
+
+      </section>
+    </div>
+		<!-- Footer -->
+				<footer id="footer">
+					<ul class="icons">
+						<li>
+        					<a href="https://www.kaggle.com/emelynataly" class="icon">
+            					<span style="font-weight: bold; font-size: 1.6em;">K</span>
+            					<span class="label">Kaggle</span>
+        					</a>
+    					</li>
+						<li><a href="https://github.com/emelynataly77" class="icon brands fa-github"><span class="label">Github</span></a></li>
+						<li><a href="https://www.linkedin.com/in/emely-pineda-7480b72a8/" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
+						<li>
+							<a href="https://public.tableau.com/app/profile/emely.pineda/vizzes" class="icon">
+								<span style="font-weight: bold; font-size: 1.6em; ">T</span>
+								<span class="label">Kaggle</span>
+							</a>	
+						<li><a href="mailto:enpineda17@gmail.com" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+					</ul>
+					<ul class="copyright">
+						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.dropotron.min.js"></script>
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>

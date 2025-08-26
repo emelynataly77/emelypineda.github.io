@@ -1,0 +1,197 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Personal Background - Emely Pineda</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <style>
+      /* Paragraph styling */
+      .personal-text {
+        color: #222;
+        font-size: 1.2rem;
+        line-height: 1.8;
+        text-align: left; /* Changed to left to match professional page */
+        margin-top: 20px;
+      }
+
+      /* Outro styling with orange links */
+      .personal-outro {
+        margin-top: 30px;
+        text-align: left; /* Changed to left to match professional page */
+      }
+      .personal-outro a {
+        color: #e67e22; /* Orange links */
+        text-decoration: none;
+        font-weight: 600;
+      }
+      .personal-outro a:hover {
+        text-decoration: underline;
+      }
+
+      /* Image placeholders styling */
+      .image-placeholder {
+        max-width: 500px;
+        margin: 30px auto;
+        display: block;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+      .image-caption {
+        text-align: center;
+        font-style: italic;
+        margin-top: -15px;
+        margin-bottom: 25px;
+        color: #666;
+      }
+      /* Container for image gallery */
+.image-row {
+  display: flex;
+  flex-wrap: wrap;               /* Wrap to next line on small screens */
+  justify-content: space-between; /* Even spacing between images */
+  margin-top: 30px;
+}
+
+/* Each image + caption block */
+.image-item {
+  flex: 1 1 30%;       /* Each image takes about 30% of row width */
+  margin: 10px;        /* Space around each image */
+  text-align: center;
+}
+
+/* Image styling */
+.image-placeholder {
+  max-width: 100%;     /* Fit container */
+  height: auto;        /* Keep aspect ratio */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Caption styling */
+.image-caption {
+  margin-top: 10px;
+  font-style: italic;
+  color: #666;
+}
+
+    </style>
+  </head>
+  <body>
+    <div id="page-wrapper">
+
+      <!-- Header -->
+      <header id="header">
+        <h1><a href="index.html">Emely Pineda Portfolio</a></h1>
+        <nav id="nav">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+              <ul>
+                <li><a href="proback.html">Professional Background</a></li>
+                <li><a href="personal.html">Personal Life</a></li>
+              </ul>
+            </li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      <!-- Main -->
+      <section id="main" class="container">
+
+        <header>
+          <h2>Personal Background</h2>
+          <p>(I promise I'm not conceited)</p>
+        </header>
+
+        <!-- Single Paragraph Section -->
+        <div class="box">
+          <p class="personal-text">
+            Some background on me: I was raised in Dallas, TX, and I’m now living in Houston (it is so humid here) after graduating college in 2024. I studied Biomedical Sciences and quickly fell in love with research. At first, I planned to go to vet school — I’m a huge animal lover and have the cutest dog named Bunny (I’ll insert a picture below…you’re welcome). Yes, he’s a dog. No, he’s not a bunny. But after taking a few courses in animal medicine, I realized the veterinary path wasn’t quite right for me.
+          </p>
+
+          <p class="personal-text">
+            After graduation, I began working at UTHealth, in a neurology lab researching protein aggregation and its effects on patients with neurodegenerative disorders. I won’t bore you with the science jargon (unless you’re into that, in which case, let’s talk), but it was during this time that I discovered a genuine passion for data analysis. I dive deeper into that in the Professional Background section — check it out if you haven’t yet.
+          </p>
+
+          <p class="personal-text">
+            Outside of work, I love to bake. People say baking is relaxing, I say it’s an experiment that sometimes ends with me covered in flour at 2 a.m., perfecting a sourdough recipe (still, I love it). I also recently got into chess and love to play during my free time (and contrary to what my partner says, I’m not a sore loser). When I’m not baking, playing chess, reading, or spending time with friends and family, I’m usually trying to learn something new. Whether it’s a scientific concept, a skill, or a hobby, I really believe the pursuit of knowledge is one of the most meaningful things we can do.
+          </p>
+
+          <p class="personal-text">
+            That belief is what led me to create this website, a place to share my work, my growth, and the journey I’m on as I continue exploring what I love. Thanks for stopping by.
+          </p>
+
+<!-- Image gallery -->
+<div class="image-row">
+  <div class="image-item">
+    <img src="images/bunny.jpg" alt="My dog Bunny" class="image-placeholder">
+    <p class="image-caption">Balancing a chicken nugget on his nose</p>
+  </div>
+  <div class="image-item">
+    <img src="images/bestie.jpg" alt="Best friend" class="image-placeholder">
+    <p class="image-caption">College best friend and roommate.</p>
+  </div>
+  <div class="image-item">
+    <img src="images/chess.jpg" alt="I love chess" class="image-placeholder">
+    <p class="image-caption">Can you tell I really like chess?</p>
+  </div>
+  <div class="image-item">
+    <img src="images/aggiering.jpg" alt="Aggie ring day" class="image-placeholder">
+    <p class="image-caption">Once an Aggie, always an Aggie.</p>
+  </div>
+  <div class="image-item">
+    <img src="images/hockey.jpeg" alt="Hockey" class="image-placeholder">
+    <p class="image-caption">I also live to play hockey during my free time.</p>
+  </div>
+  <div class="image-item">
+    <img src="images/labpic.jpg" alt="My time as a scientist" class="image-placeholder">
+    <p class="image-caption">Purifying alphasynuclein wildtype protein here.</p>
+  </div>
+</div>
+
+
+          <!-- Outro Section -->
+          <div class="personal-outro">
+            <h3>Well, you made it to the end. Now you officially know more about me than some of my cousins.</h3>
+            <p>If you'd like to learn more about me, check out my 
+              <a href="certificate.html">Data Analytics Certificate</a> or
+              <a href="letter.html">Letter of Recommendation</a>.
+            </p>
+          </div>
+        </div>
+      </section>
+
+     		<!-- Footer -->
+				<footer id="footer">
+					<ul class="icons">
+						<li>
+        					<a href="https://www.kaggle.com/emelynataly" class="icon">
+            					<span style="font-weight: bold; font-size: 1.6em;">K</span>
+            					<span class="label">Kaggle</span>
+        					</a>
+    					</li>
+						<li><a href="https://github.com/emelynataly77" class="icon brands fa-github"><span class="label">Github</span></a></li>
+						<li><a href="https://www.linkedin.com/in/emely-pineda-7480b72a8/" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
+						<li>
+							<a href="https://public.tableau.com/app/profile/emely.pineda/vizzes" class="icon">
+								<span style="font-weight: bold; font-size: 1.6em; ">T</span>
+								<span class="label">Kaggle</span>
+							</a>	
+						<li><a href="mailto:enpineda17@gmail.com" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+					</ul>
+					<ul class="copyright">
+						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.dropotron.min.js"></script>
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>
